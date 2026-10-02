@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09050d">
+<title>Entre Dos</title>
+<style>
+:root{
+  --bg:#08060b;--bg2:#120819;--panel:rgba(25,15,31,.76);--panel2:rgba(31,17,39,.9);
+  --text:#fff8fc;--muted:#cdbdca;--line:rgba(255,255,255,.11);--rose:#ff4f96;--pink:#ff7bb5;
+  --violet:#9c6cff;--wine:#8d244d;--good:#ffc1db;--shadow:0 28px 80px rgba(0,0,0,.38);
+  --radius:28px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);color-scheme:dark}
+body{margin:0;background:radial-gradient(circle at 50% -20%,#34113f 0,#140918 38%,#08060b 72%);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;min-height:100dvh;overflow-x:hidden}
+button,input{font:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid #ff89bd;outline-offset:3px}
+.app{min-height:100dvh;position:relative;overflow:hidden}
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.28}
+.b1{width:260px;height:260px;background:#b42c74;left:-90px;top:8%}
+.b2{width:310px;height:310px;background:#6928c6;right:-130px;top:28%}
+.b3{width:240px;height:240px;background:#841f3f;left:24%;bottom:-120px}
+.spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff;opacity:.08}
+.screen{display:none;min-height:100dvh;position:relative;z-index:2;padding:
+  max(18px,env(safe-area-inset-top)) 18px max(20px,env(safe-area-inset-bottom));}
+.screen.active{display:flex;animation:screenIn .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes screenIn{from{opacity:0;transform:translateY(10px) scale(.992)}to{opacity:1;transform:none}}
+.shell{width:min(100%,980px);margin:auto}
+.glass{background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border:1px solid var(--line);
+  box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.btn{border:1px solid rgba(255,255,255,.12);color:var(--text);background:rgba(255,255,255,.07);border-radius:18px;
+  min-height:54px;padding:0 18px;font-weight:750;letter-spacing:.01em;transition:.18s transform,.18s background,.18s border,.18s opacity}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,#ff3c8d,#a73fff 68%,#7f2be0);border-color:rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(210,49,137,.28)}
+.btn.secondary{background:rgba(255,255,255,.055)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.16em;color:#f0a9c8;font-weight:800}
+.muted{color:var(--muted)}
+.iconbtn{width:48px;height:48px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;display:grid;place-items:center}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand-mini{font-weight:850;letter-spacing:.12em;font-size:.86rem;color:#f9d7e5}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#f2c9db;font-size:.78rem;font-weight:700}
+
+/* cover */
+#cover{align-items:stretch}
+.cover-wrap{width:min(100%,760px);margin:auto;min-height:calc(100dvh - max(36px,env(safe-area-inset-top)) - max(40px,env(safe-area-inset-bottom)));
+  display:flex;flex-direction:column;justify-content:space-between;gap:30px}
+.cover-top{padding-top:clamp(22px,8dvh,92px)}
+.cover-mark{display:flex;align-items:center;gap:10px}
+.cover-logo{font-size:clamp(2.4rem,12vw,5.8rem);line-height:.88;letter-spacing:-.06em;margin:24px 0 16px;font-weight:920}
+.cover-logo .accent{background:linear-gradient(135deg,#ff7bb5,#ff3d8e 46%,#9d68ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-title{font-size:clamp(2rem,8.7vw,4.7rem);line-height:1.02;letter-spacing:-.045em;max-width:680px;margin:0 0 16px}
+.cover-sub{font-size:clamp(1rem,3.7vw,1.25rem);line-height:1.55;max-width:560px;color:#d7c8d5;margin:0}
+.hero-orbit{height:230px;position:relative;margin:10px 0 -8px}
+.orbit-ring{position:absolute;border:1px solid rgba(255,255,255,.09);border-radius:50%;inset:20px 8%;transform:rotate(-7deg)}
+.orbit-ring.r2{inset:48px 19%;transform:rotate(17deg);border-color:rgba(255,102,170,.18)}
+.orbit-heart{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-5deg);width:122px;height:122px;border-radius:38% 62% 58% 42%/44% 40% 60% 56%;
+  background:linear-gradient(145deg,#ff4d97,#b94bff);box-shadow:0 28px 70px rgba(255,53,147,.25)}
+.orbit-heart:before,.orbit-heart:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.2)}
+.orbit-heart:before{width:26px;height:26px;left:22px;top:18px}.orbit-heart:after{width:10px;height:10px;right:23px;bottom:28px}
+.cover-cta{padding-bottom:6px}
+.cover-cta .btn{width:100%;min-height:62px;font-size:1.05rem}
+
+/* config */
+.config-card{border-radius:32px;padding:22px;max-width:620px;margin:auto}
+.h1{font-size:clamp(2rem,8vw,3.6rem);line-height:1.05;letter-spacing:-.04em;margin:16px 0 8px}
+.field{margin-top:16px}
+.field label{display:block;color:#f2d5e2;font-size:.82rem;font-weight:750;margin:0 0 8px 4px}
+.field input{width:100%;font-size:16px;min-height:56px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;padding:0 16px}
+.rule{margin-top:22px;border-radius:20px;padding:16px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
+.checkrow{display:flex;align-items:flex-start;gap:12px;margin-top:16px}
+.checkrow input{width:22px;height:22px;accent-color:#ff4f96;flex:0 0 auto;margin-top:2px}
+.config-actions{margin-top:22px;display:grid;grid-template-columns:1fr;gap:10px}
+
+/* menu */
+.menu-shell{width:min(100%,900px);margin:auto}
+.menu-head{padding:8px 2px 18px}
+.menu-title{font-size:clamp(1.8rem,7vw,3rem);margin:8px 0 4px;letter-spacing:-.035em}
+.level-grid{display:grid;grid-template-columns:1fr;gap:14px;padding-bottom:100px}
+.level-card{position:relative;overflow:hidden;border-radius:26px;min-height:148px;padding:20px;text-align:left;color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 46px rgba(0,0,0,.24);transition:.2s transform,.2s border-color}
+.level-card:active{transform:scale(.985)}
+.level-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,var(--c1),var(--c2));opacity:.28}
+.level-card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-45px;top:-54px;background:var(--c2);filter:blur(28px);opacity:.34}
+.level-card>*{position:relative;z-index:1}
+.level-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.level-icon{width:52px;height:52px;border-radius:18px;background:rgba(255,255,255,.11);display:grid;place-items:center;font-size:1.5rem;border:1px solid rgba(255,255,255,.12)}
+.level-card h3{font-size:1.2rem;margin:14px 0 5px}
+.level-card p{margin:0;color:#e7dbe6;line-height:1.45;font-size:.92rem;max-width:80%}
+.level-meta{margin-top:16px;font-size:.76rem;color:#f5cadc;font-weight:750;letter-spacing:.06em;text-transform:uppercase}
+.menu-fav{position:sticky;bottom:max(12px,env(safe-area-inset-bottom));display:flex;gap:10px;justify-content:center;z-index:5}
+.menu-fav .btn{box-shadow:0 12px 30px rgba(0,0,0,.35)}
+
+/* game */
+#game{padding-left:12px;padding-right:12px}
+.game-shell{width:min(100%,820px);margin:auto;display:flex;flex-direction:column;min-height:calc(100dvh - max(18px,env(safe-area-inset-top)) - max(20px,env(safe-area-inset-bottom)))}
+.game-top{display:flex;align-items:center;gap:10px;padding:2px 4px 12px}
+.game-level{flex:1;min-width:0}
+.game-level .name{font-weight:850;font-size:.95rem}.game-level .progressText{color:#cdbdca;font-size:.74rem;margin-top:2px}
+.progress{height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:0 4px 12px}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff4f96,#9c6cff);transition:width .35s ease;border-radius:inherit}
+.card-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.challenge-card{width:100%;border-radius:30px;padding:20px;position:relative;overflow:hidden;min-height:min(65dvh,620px);max-height:660px;
+  display:grid;grid-template-rows:auto auto minmax(180px,1fr) auto;gap:14px;background:
+  radial-gradient(circle at 90% 5%,rgba(255,88,163,.16),transparent 34%),
+  linear-gradient(180deg,rgba(29,17,37,.92),rgba(14,9,19,.94));border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow)}
+.challenge-card.enter{animation:cardIn .36s cubic-bezier(.2,.85,.23,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateX(20px) rotate(.6deg) scale(.985)}to{opacity:1;transform:none}}
+.challenge-card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:var(--accent,#ff4f96);filter:blur(70px);opacity:.13;right:-40px;bottom:-60px}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:1}
+.card-type{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#f4a5c8;font-weight:900}
+.turn-name{margin-top:5px;font-weight:900;font-size:1.05rem}
+.card-num{font-size:.78rem;color:#d0becd;border:1px solid var(--line);padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.04)}
+.card-copy{position:relative;z-index:1}
+.card-copy h2{font-size:clamp(1.65rem,7vw,3rem);line-height:1.08;letter-spacing:-.035em;margin:0}
+.card-hint{margin:9px 0 0;color:#d6c4d2;font-size:.88rem}
+.illustration{display:grid;place-items:center;position:relative;z-index:1;min-height:190px}
+.illustration svg{width:min(100%,320px);max-height:245px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.2))}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:1}
+.duration-chip{display:none;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.065);border:1px solid var(--line);font-size:.78rem;color:#f7d3e2}
+.duration-chip.show{display:inline-flex}
+.favorite-heart{border:0;background:transparent;color:#cdbdca;font-size:1.55rem;width:48px;height:48px;border-radius:50%;display:grid;place-items:center}
+.favorite-heart.on{color:#ff5a9e;animation:heartPop .35s ease}
+@keyframes heartPop{50%{transform:scale(1.25)}}
+.game-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:12px 2px max(3px,env(safe-area-inset-bottom))}
+.action-btn{border:1px solid var(--line);background:rgba(255,255,255,.055);color:#fff;border-radius:16px;min-height:58px;padding:6px 3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:.68rem;font-weight:760}
+.action-btn .ico{font-size:1.08rem}.action-btn.next{background:linear-gradient(135deg,#ff3c8d,#9a49f3);border-color:transparent}
+.action-btn:active{transform:scale(.96)}
+.completion{display:none;text-align:center;padding:28px 22px;border-radius:30px}
+.completion.show{display:block;animation:screenIn .4s ease both}
+.completion .big{font-size:3rem}.completion h2{font-size:2rem;margin:10px 0 7px}.completion p{color:#d2c1ce;margin:0 0 20px}
+.completion-actions{display:grid;gap:10px}
+
+/* favorites */
+.fav-shell{width:min(100%,760px);margin:auto}
+.fav-list{display:grid;gap:12px;margin-top:18px;padding-bottom:30px}
+.fav-item{border-radius:22px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
+.fav-item .lvl{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#ef9fc2;font-weight:850}
+.fav-item p{margin:7px 0 0;line-height:1.4}
+.remove-fav{border:1px solid var(--line);background:rgba(255,255,255,.05);color:#ff8bbd;border-radius:14px;width:44px;height:44px}
+.empty{padding:34px 20px;text-align:center;border-radius:26px;color:#d7c6d4}
+
+/* timer modal */
+.modal{position:fixed;inset:0;z-index:20;background:rgba(3,2,5,.72);display:none;align-items:flex-end;justify-content:center;padding:20px;padding-bottom:max(20px,env(safe-area-inset-bottom));backdrop-filter:blur(10px)}
+.modal.show{display:flex;animation:fadeIn .2s ease both}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.timer-sheet{width:min(100%,520px);border-radius:30px;padding:20px;background:linear-gradient(180deg,#1d1222,#0d0911);border:1px solid rgba(255,255,255,.13);box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.timer-head{display:flex;align-items:center;justify-content:space-between}
+.timer-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.timer-options button{min-height:52px}
+.timer-circle{--p:0deg;width:190px;height:190px;margin:24px auto 14px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#ff4f96 var(--p),rgba(255,255,255,.08) 0);position:relative}
+.timer-circle:after{content:"";position:absolute;inset:12px;border-radius:50%;background:#120b16;border:1px solid rgba(255,255,255,.08)}
+.timer-number{position:relative;z-index:1;font-size:2.7rem;font-weight:900;letter-spacing:-.04em}
+.timer-circle.done{animation:donePulse .55s ease 2}@keyframes donePulse{50%{transform:scale(1.045);box-shadow:0 0 0 9px rgba(255,79,150,.1)}}
+.timer-note{text-align:center;color:#cbbac8;font-size:.84rem}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(82px + env(safe-area-inset-bottom));transform:translate(-50%,16px);z-index:30;background:#201322;border:1px solid rgba(255,255,255,.12);color:#fff;padding:11px 15px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 12px 30px rgba(0,0,0,.35);font-size:.82rem}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:700px){
+  .level-grid{grid-template-columns:repeat(2,1fr)}
+  .level-card.photos{grid-column:1/-1}
+  .config-card{padding:30px}
+}
+@media(max-width:380px){
+  .challenge-card{padding:17px;min-height:62dvh}
+  .card-copy h2{font-size:1.5rem}
+  .illustration{min-height:150px}
+  .action-btn{min-height:54px;font-size:.62rem}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="ambient" aria-hidden="true">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <span class="spark" style="left:13%;top:17%"></span><span class="spark" style="left:78%;top:11%"></span>
+    <span class="spark" style="left:66%;top:63%"></span><span class="spark" style="left:23%;top:72%"></span>
+  </div>
+
+  <section id="cover" class="screen active" data-screen="cover">
+    <div class="cover-wrap">
+      <div class="cover-top">
+        <div class="cover-mark"><span class="badge">Juego privado · 18+</span></div>
+        <div class="cover-logo">ENTRE <span class="accent">DOS</span></div>
+        <h1 class="cover-title">Una noche para acercarse.</h1>
+        <p class="cover-sub">Cartas, retos y momentos diseñados para disfrutarse entre dos.</p>
+      </div>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-ring"></div><div class="orbit-ring r2"></div><div class="orbit-heart"></div>
+      </div>
+      <div class="cover-cta"><button id="coverStart" class="btn primary">Comenzar</button></div>
+    </div>
+  </section>
+
+  <section id="config" class="screen" data-screen="config">
+    <div class="shell">
+      <div class="toprow"><button class="iconbtn" data-nav="cover" aria-label="Volver">←</button><div class="brand-mini">ENTRE DOS</div><span></span></div>
+      <div class="config-card glass" style="margin-top:24px">
+        <div class="eyebrow">Antes de empezar</div>
+        <h2 class="h1">¿Quién juega esta noche?</h2>
+        <p class="muted" style="margin:0">Usaremos sus nombres dentro de las cartas y turnos.</p>
+        <div class="field"><label for="name1">Persona 1</label><input id="name1" maxlength="22" autocomplete="off" placeholder="Nombre"></div>
+        <div class="field"><label for="name2">Persona 2</label><input id="name2" maxlength="22" autocomplete="off" placeholder="Nombre"></div>
+        <div class="rule">
+          <div class="eyebrow">Regla principal</div>
+          <p style="margin:8px 0 0;line-height:1.5">Todo se hace con consentimiento mutuo. Cualquiera puede decir <strong>Paso</strong> en cualquier momento.</p>
+        </div>
+        <label class="checkrow"><input id="consent" type="checkbox"><span>Ambos somos adultos y participamos voluntariamente.</span></label>
+        <div class="config-actions"><button id="enterGame" class="btn primary" disabled>Entrar al juego</button></div>
+        <p class="muted" style="font-size:.75rem;text-align:center;margin:14px 0 0">Todo funciona localmente en este dispositivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="screen" data-screen="menu">
+    <div class="menu-shell">
+      <div class="toprow"><div class="brand-mini">ENTRE DOS</div><button id="menuFavTop" class="iconbtn" aria-label="Favoritos">♡</button></div>
+      <header class="menu-head">
+        <div class="eyebrow">Elijan el ambiente</div>
+        <h2 class="menu-title">¿Qué quieren sentir?</h2>
+        <p class="muted" style="margin:0">Cinco niveles. Cada uno tiene 20 cartas sin repeticiones.</p>
+      </header>
+      <div id="levelGrid" class="level-grid"></div>
+      <div class="menu-fav"><button id="menuFavorites" class="btn secondary">♡ Nuestros favoritos</button></div>
+    </div>
+  </section>
+
+  <section id="game" class="screen" data-screen="game">
+    <div class="game-shell">
+      <div class="game-top">
+        <button id="gameHomeTop" class="iconbtn" aria-label="Volver al menú">⌂</button>
+        <div class="game-level"><div id="gameLevelName" class="name">Nivel</div><div id="gameProgressText" class="progressText">Carta 1 de 20</div></div>
+        <button id="gameFavTop" class="iconbtn" aria-label="Ver favoritos">♡</button>
+      </div>
+      <div class="progress"><span id="gameProgress"></span></div>
+      <div id="cardWrap" class="card-wrap">
+        <article id="challengeCard" class="challenge-card">
+          <div class="card-top">
+            <div><div id="cardType" class="card-type">TIPO</div><div id="turnName" class="turn-name">Turno</div></div>
+            <div id="cardNumber" class="card-num">1 / 20</div>
+          </div>
+          <div class="card-copy">
+            <h2 id="cardText">Carta</h2>
+            <p id="cardHint" class="card-hint"></p>
+          </div>
+          <div id="illustration" class="illustration" aria-hidden="true"></div>
+          <div class="card-bottom">
+            <span id="durationChip" class="duration-chip">◷ 30 s</span>
+            <button id="favoriteHeart" class="favorite-heart" aria-label="Agregar a favoritos">♡</button>
+          </div>
+        </article>
+        <div id="completion" class="completion glass">
+          <div class="big">✦</div>
+          <div class="eyebrow">Nivel completado</div>
+          <h2>Han completado este nivel</h2>
+          <p id="completionText">20 cartas compartidas.</p>
+          <div class="completion-actions">
+            <button id="replayLevel" class="btn primary">Volver a jugar</button>
+            <button id="nextLevel" class="btn secondary">Ir al siguiente nivel</button>
+            <button id="chooseLevel" class="btn secondary">Elegir otro nivel</button>
+          </div>
+        </div>
+      </div>
+      <nav class="game-actions" aria-label="Acciones del juego">
+        <button id="passBtn" class="action-btn"><span class="ico">↷</span><span>Paso</span></button>
+        <button id="nextBtn" class="action-btn next"><span class="ico">→</span><span>Siguiente</span></button>
+        <button id="favBtn" class="action-btn"><span class="ico">♡</span><span>Favorito</span></button>
+        <button id="timerBtn" class="action-btn"><span class="ico">◷</span><span>Temporizador</span></button>
+        <button id="homeBtn" class="action-btn"><span class="ico">⌂</span><span>Inicio</span></button>
+      </nav>
+    </div>
+  </section>
+
+  <section id="favorites" class="screen" data-screen="favorites">
+    <div class="fav-shell">
+      <div class="toprow"><button id="favBack" class="iconbtn" aria-label="Volver">←</button><div class="brand-mini">ENTRE DOS</div><span></span></div>
+      <div style="margin-top:22px"><div class="eyebrow">Guardadas por ustedes</div><h2 class="h1" style="margin-top:10px">Nuestros favoritos</h2><p class="muted" style="margin:0">Las cartas marcadas con corazón aparecen aquí.</p></div>
+      <div id="favoritesList" class="fav-list"></div>
+    </div>
+  </section>
+
+  <div id="timerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="timerTitle">
+    <div class="timer-sheet">
+      <div class="timer-head"><div><div class="eyebrow">Temporizador</div><h3 id="timerTitle" style="margin:5px 0 0;font-size:1.45rem">Elige una duración</h3></div><button id="closeTimer" class="iconbtn" aria-label="Cerrar">×</button></div>
+      <div id="timerOptions" class="timer-options">
+        <button class="btn secondary" data-seconds="15">15 s</button>
+        <button class="btn secondary" data-seconds="30">30 s</button>
+        <button class="btn secondary" data-seconds="60">60 s</button>
+      </div>
+      <div id="timerCircle" class="timer-circle"><span id="timerNumber" class="timer-number">30</span></div>
+      <div id="timerNote" class="timer-note">Toca una duración para comenzar.</div>
+    </div>
+  </div>
+  <div id="toast" class="toast" aria-live="polite"></div>
+</div>
+
+<script>
+const gameData = {
+  conexion: {
+    name:"Conexión", icon:"✦", desc:"Conversación, cercanía y momentos para mirarse de verdad.", c1:"#803b78", c2:"#3d275f",
+    cards:[
+      {id:"conexion-01",type:"MIRADA",text:"Mírense a los ojos durante 20 segundos sin hablar.",duration:20,illustration:"gaze",for:"both"},
+      {id:"conexion-02",type:"PREGUNTA",text:"Dile algo pequeño que agradezcas de hoy.",illustration:"heart",for:"single"},
+      {id:"conexion-03",type:"RECUERDO",text:"Cuenta cuál fue tu primera impresión de tu pareja.",illustration:"spark",for:"single"},
+      {id:"conexion-04",type:"ABRAZO",text:"Abrácense en silencio durante 30 segundos.",duration:30,illustration:"hug",for:"both"},
+      {id:"conexion-05",type:"CUMPLIDO",text:"Di tres cosas que te atraen de su forma de ser.",illustration:"heart",for:"single"},
+      {id:"conexion-06",type:"PREGUNTA",text:"¿Qué momento juntos te gustaría repetir exactamente igual?",illustration:"memory",for:"single"},
+      {id:"conexion-07",type:"CERCA",text:"Siéntense hombro con hombro y respiren lento durante 30 segundos.",duration:30,illustration:"seated",for:"both"},
+      {id:"conexion-08",type:"SECRETO",text:"Comparte un gusto pequeño que casi nunca cuentas.",illustration:"whisper",for:"single"},
+      {id:"conexion-09",type:"MANOS",text:"Entrelacen las manos y manténganlas así durante un minuto.",duration:60,illustration:"hands",for:"both"},
+      {id:"conexion-10",type:"PREGUNTA",text:"¿Qué detalle de tu pareja te hace sentir cuidado?",illustration:"heart",for:"single"},
+      {id:"conexion-11",type:"SILENCIO",text:"Apoya tu cabeza cerca de la suya y quédense así 30 segundos.",duration:30,illustration:"forehead",for:"both"},
+      {id:"conexion-12",type:"CUMPLIDO",text:"Dile algo que admiras de cómo enfrenta los días difíciles.",illustration:"spark",for:"single"},
+      {id:"conexion-13",type:"RECUERDO",text:"Describe una cita o salida que todavía te haga sonreír.",illustration:"memory",for:"single"},
+      {id:"conexion-14",type:"MIRADA",text:"Mira a tu pareja y sonríe sin decir nada durante 15 segundos.",duration:15,illustration:"gaze",for:"single"},
+      {id:"conexion-15",type:"PREGUNTA",text:"¿Qué te gustaría hacer más seguido juntos?",illustration:"heart",for:"single"},
+      {id:"conexion-16",type:"AFECTO",text:"Toma su rostro con suavidad y dile algo bonito.",illustration:"face",for:"single"},
+      {id:"conexion-17",type:"CERCA",text:"Acérquense frente con frente y permanezcan así 20 segundos.",duration:20,illustration:"forehead",for:"both"},
+      {id:"conexion-18",type:"PREGUNTA",text:"¿Qué canción te recuerda a nosotros y por qué?",illustration:"spark",for:"single"},
+      {id:"conexion-19",type:"ABRAZO",text:"Den un abrazo largo, sin prisa, hasta que ambos quieran soltar.",illustration:"hug",for:"both"},
+      {id:"conexion-20",type:"DESEO",text:"Dile una experiencia sencilla que te gustaría compartir pronto.",illustration:"heart",for:"single"}
+    ]
+  },
+  coqueteo: {
+    name:"Coqueteo", icon:"♡", desc:"Besos, tensión ligera y contacto suave que sube poco a poco.", c1:"#b62f72", c2:"#6d2c91",
+    cards:[
+      {id:"coqueteo-01",type:"BESO",text:"Acércate lentamente y dale un beso largo. Quédate cerca unos segundos.",duration:30,illustration:"kiss",for:"single"},
+      {id:"coqueteo-02",type:"CARICIA",text:"Acaricia su rostro con la punta de los dedos durante 20 segundos.",duration:20,illustration:"face",for:"single"},
+      {id:"coqueteo-03",type:"BESO",text:"Dale un beso suave en el cuello.",illustration:"neck",for:"single"},
+      {id:"coqueteo-04",type:"ABRAZO",text:"Abrázala o abrázalo por la cintura y acércalo a ti.",illustration:"waist",for:"single"},
+      {id:"coqueteo-05",type:"MIRADA",text:"Mantén contacto visual mientras te acercas hasta quedar muy cerca.",duration:15,illustration:"gaze",for:"single"},
+      {id:"coqueteo-06",type:"CARICIA",text:"Recorre lentamente su brazo desde la mano hasta el hombro.",illustration:"arm",for:"single"},
+      {id:"coqueteo-07",type:"BESO",text:"Elige entre frente, mejilla o cuello y dale un beso lento.",illustration:"kiss",for:"single"},
+      {id:"coqueteo-08",type:"CABELLO",text:"Pasa una mano por su cabello y acércate para decirle algo bonito.",illustration:"hair",for:"single"},
+      {id:"coqueteo-09",type:"ABRAZO",text:"Den un abrazo frente a frente durante 30 segundos.",duration:30,illustration:"hug",for:"both"},
+      {id:"coqueteo-10",type:"CARICIA",text:"Acaricia suavemente su espalda durante 30 segundos.",duration:30,illustration:"back",for:"single"},
+      {id:"coqueteo-11",type:"BESO",text:"Dale tres besos: uno en la mejilla, uno en la mandíbula y uno en el cuello.",illustration:"neck",for:"single"},
+      {id:"coqueteo-12",type:"MANOS",text:"Toma sus manos y acerca sus dedos a tus labios.",illustration:"hands",for:"single"},
+      {id:"coqueteo-13",type:"CERCA",text:"Coloca una mano en su cintura y mantén la mirada durante 20 segundos.",duration:20,illustration:"waist",for:"single"},
+      {id:"coqueteo-14",type:"BESO",text:"Dale un beso y aléjate solo lo suficiente para volver a mirarlo.",illustration:"kiss",for:"single"},
+      {id:"coqueteo-15",type:"SUSURRO",text:"Acércate a su oído y dile qué te gusta de tenerlo tan cerca.",illustration:"whisper",for:"single"},
+      {id:"coqueteo-16",type:"CARICIA",text:"Acaricia su nuca mientras permanecen frente a frente.",illustration:"neck",for:"single"},
+      {id:"coqueteo-17",type:"BESO",text:"Besa lentamente su hombro y vuelve a mirarlo.",illustration:"shoulder",for:"single"},
+      {id:"coqueteo-18",type:"CERCA",text:"Siéntense juntos, pierna con pierna, durante un minuto.",duration:60,illustration:"seated",for:"both"},
+      {id:"coqueteo-19",type:"CARICIA",text:"Desliza una mano por su cintura y quédate ahí unos segundos.",duration:15,illustration:"waist",for:"single"},
+      {id:"coqueteo-20",type:"ELECCIÓN",text:"Tu pareja elige: beso en los labios, cuello o mejilla.",illustration:"kiss",for:"single"}
+    ]
+  },
+  intenso: {
+    name:"Intenso", icon:"◆", desc:"Retos más atrevidos, cercanía sostenida y posiciones románticas.", c1:"#9e245a", c2:"#7b2dbe",
+    cards:[
+      {id:"intenso-01",type:"BESO",text:"Dale un beso largo y no te alejes al terminar.",duration:30,illustration:"kiss",for:"single"},
+      {id:"intenso-02",type:"RECORRIDO",text:"Recorre con besos desde la mejilla hasta el hombro.",illustration:"shoulder",for:"single"},
+      {id:"intenso-03",type:"POSE",text:"Siéntense frente a frente con las piernas cerca y mantengan la mirada.",duration:30,illustration:"seatedFace",for:"both"},
+      {id:"intenso-04",type:"ABRAZO",text:"Abrázala o abrázalo por detrás y quédate así 30 segundos.",duration:30,illustration:"backHug",for:"single"},
+      {id:"intenso-05",type:"SUSURRO",text:"Con los ojos cerrados, deja que tu pareja se acerque y te susurre algo.",illustration:"whisper",for:"both"},
+      {id:"intenso-06",type:"CARICIA",text:"Acaricia lentamente cuello, hombros y brazos durante un minuto.",duration:60,illustration:"shoulder",for:"single"},
+      {id:"intenso-07",type:"BESO",text:"Dale un beso en el cuello y luego otro en el hombro.",illustration:"neck",for:"single"},
+      {id:"intenso-08",type:"CERCA",text:"Quédense acostados uno junto al otro, frente a frente, durante un minuto.",duration:60,illustration:"recline",for:"both"},
+      {id:"intenso-09",type:"ELECCIÓN",text:"Elige: beso largo, abrazo por detrás o sentarse frente a frente.",illustration:"choice",for:"single"},
+      {id:"intenso-10",type:"CARICIA",text:"Acaricia su espalda desde los hombros hasta la cintura.",duration:30,illustration:"back",for:"single"},
+      {id:"intenso-11",type:"BESO",text:"Recorre con besos el rostro, la mandíbula y el cuello.",duration:30,illustration:"neck",for:"single"},
+      {id:"intenso-12",type:"OJOS CERRADOS",text:"Cierra los ojos y deja que tu pareja elija dónde darte un beso no íntimo.",illustration:"kiss",for:"single"},
+      {id:"intenso-13",type:"POSE",text:"Siéntense muy cerca, frente con frente, y respiren al mismo ritmo.",duration:30,illustration:"forehead",for:"both"},
+      {id:"intenso-14",type:"CARICIA",text:"Pasa tus manos lentamente por sus brazos, hombros y cintura.",duration:45,illustration:"waist",for:"single"},
+      {id:"intenso-15",type:"BESO",text:"Dale un beso lento y luego uno suave en la parte alta del muslo.",illustration:"thigh",for:"single"},
+      {id:"intenso-16",type:"CONFIANZA",text:"Tu pareja guía tus manos hacia una zona no íntima que quiera recibir caricias.",duration:30,illustration:"hands",for:"single"},
+      {id:"intenso-17",type:"SUSURRO",text:"Acércate a su oído y describe el beso que te gustaría recibir.",illustration:"whisper",for:"single"},
+      {id:"intenso-18",type:"POSE",text:"Recuéstense de lado, uno frente al otro, y abrácense.",duration:60,illustration:"recline",for:"both"},
+      {id:"intenso-19",type:"RECORRIDO",text:"Da besos desde la frente hasta el cuello, sin prisa.",illustration:"neck",for:"single"},
+      {id:"intenso-20",type:"RETO",text:"Durante 30 segundos, solo pueden comunicarse con miradas y caricias suaves.",duration:30,illustration:"gaze",for:"both"}
+    ]
+  },
+  extremo: {
+    name:"Extremo", icon:"✺", desc:"Tensión, anticipación y contacto íntimo no gráfico, con más confianza.", c1:"#7b193f", c2:"#5a248f",
+    cards:[
+      {id:"extremo-01",type:"RECORRIDO",text:"Empieza con un beso en los labios y continúa lentamente hacia el cuello, deteniéndote antes de bajar más.",illustration:"trail",for:"single"},
+      {id:"extremo-02",type:"RECORRIDO",text:"Da un recorrido de besos desde el rostro hasta la parte baja del muslo, manteniendo el ritmo lento.",duration:60,illustration:"thigh",for:"single"},
+      {id:"extremo-03",type:"ELECCIÓN",text:"Tu pareja elige el reto de esta ronda.",illustration:"choice",for:"single"},
+      {id:"extremo-04",type:"CARICIA",text:"Elige una zona no íntima y dedica 30 segundos únicamente a caricias.",duration:30,illustration:"hands",for:"single"},
+      {id:"extremo-05",type:"POSE",text:"Siéntense frente a frente y mantengan la posición durante un minuto.",duration:60,illustration:"seatedFace",for:"both"},
+      {id:"extremo-06",type:"ABRAZO",text:"Abrázala o abrázalo por detrás y alterna caricias lentas en brazos y cintura.",duration:45,illustration:"backHug",for:"single"},
+      {id:"extremo-07",type:"BESO",text:"Dale un beso largo y mantén una mano en su rostro durante todo el tiempo.",duration:30,illustration:"faceKiss",for:"single"},
+      {id:"extremo-08",type:"ANTICIPACIÓN",text:"Acércate como si fueras a besarle, espera cinco segundos y entonces decide dónde dar el beso.",illustration:"nearKiss",for:"single"},
+      {id:"extremo-09",type:"RECORRIDO",text:"Alterna besos entre cuello, hombro y parte alta del muslo.",duration:45,illustration:"thigh",for:"single"},
+      {id:"extremo-10",type:"CONFIANZA",text:"Cierra los ojos y deja que tu pareja dirija durante 30 segundos dónde recibir caricias no íntimas.",duration:30,illustration:"hands",for:"single"},
+      {id:"extremo-11",type:"POSE",text:"Recuéstense juntos y mantengan un abrazo cercano durante un minuto.",duration:60,illustration:"recline",for:"both"},
+      {id:"extremo-12",type:"SUSURRO",text:"Dile al oído qué parte de este juego te ha gustado más hasta ahora.",illustration:"whisper",for:"single"},
+      {id:"extremo-13",type:"CARICIA",text:"Recorre lentamente con las manos hombros, espalda y cintura.",duration:60,illustration:"back",for:"single"},
+      {id:"extremo-14",type:"BESO",text:"Da tres besos lentos en tres lugares no íntimos elegidos por tu pareja.",illustration:"kiss",for:"single"},
+      {id:"extremo-15",type:"POSE",text:"Permanezcan frente con frente, abrazados por la cintura, durante 45 segundos.",duration:45,illustration:"forehead",for:"both"},
+      {id:"extremo-16",type:"RECORRIDO",text:"Empieza en los labios y baja lentamente con besos hasta los muslos.",duration:60,illustration:"trail",for:"single"},
+      {id:"extremo-17",type:"RETO LIBRE",text:"Elige tú un reto íntimo no gráfico para tu pareja.",illustration:"choice",for:"single"},
+      {id:"extremo-18",type:"CARICIA",text:"Mantén una caricia lenta en espalda o cintura durante un minuto, sin cambiar de zona.",duration:60,illustration:"waist",for:"single"},
+      {id:"extremo-19",type:"BESO",text:"Besa cuello, hombro y abdomen con pausas entre cada beso.",duration:45,illustration:"trail",for:"single"},
+      {id:"extremo-20",type:"CONFIANZA",text:"Los dos eligen una pose cercana y la mantienen durante 60 segundos.",duration:60,illustration:"pose",for:"both"}
+    ]
+  },
+  fotos: {
+    name:"Fotos", icon:"◉", desc:"Retos románticos y sugerentes para capturar con su propio teléfono.", c1:"#a73566", c2:"#3b5f92",
+    cards:[
+      {id:"fotos-01",type:"FOTO",text:"Tomen una foto frente a frente con las frentes juntas.",illustration:"photoForehead",for:"both"},
+      {id:"fotos-02",type:"FOTO",text:"Captura a tu pareja mientras te da un beso en el cuello.",illustration:"photoNeck",for:"single"},
+      {id:"fotos-03",type:"FOTO",text:"Tomen una foto de sus siluetas abrazándose.",illustration:"silhouette",for:"both"},
+      {id:"fotos-04",type:"FOTO",text:"Fotografía solo sus manos entrelazadas sobre la cama.",illustration:"photoHands",for:"both"},
+      {id:"fotos-05",type:"FOTO",text:"Toma una foto de tu pareja acercándose para darte un beso.",illustration:"photoKiss",for:"single"},
+      {id:"fotos-06",type:"FOTO",text:"Recreen una pose romántica usando solo sus siluetas.",illustration:"silhouette",for:"both"},
+      {id:"fotos-07",type:"FOTO",text:"Fotografía un abrazo por detrás, sin mirar a la cámara.",illustration:"backHug",for:"both"},
+      {id:"fotos-08",type:"FOTO",text:"Tomen una foto sentados frente a frente, muy cerca.",illustration:"seatedFace",for:"both"},
+      {id:"fotos-09",type:"FOTO",text:"Captura un beso en la mejilla con los ojos cerrados.",illustration:"photoKiss",for:"single"},
+      {id:"fotos-10",type:"FOTO",text:"Haz una foto de la mano de tu pareja sobre tu cintura.",illustration:"photoWaist",for:"single"},
+      {id:"fotos-11",type:"FOTO",text:"Tomen una foto acostados de lado, mirándose.",illustration:"recline",for:"both"},
+      {id:"fotos-12",type:"FOTO",text:"Fotografía un beso en el hombro usando luz lateral.",illustration:"shoulder",for:"single"},
+      {id:"fotos-13",type:"FOTO",text:"Tomen una foto de espaldas, abrazados, mirando hacia una ventana.",illustration:"silhouette",for:"both"},
+      {id:"fotos-14",type:"FOTO",text:"Captura solo dos copas o tazas junto a sus manos entrelazadas.",illustration:"photoHands",for:"both"},
+      {id:"fotos-15",type:"FOTO",text:"Haz una foto de tu pareja sonriendo justo antes de un beso.",illustration:"photoKiss",for:"single"},
+      {id:"fotos-16",type:"FOTO",text:"Tomen una foto en espejo abrazados, sin usar flash.",illustration:"mirror",for:"both"},
+      {id:"fotos-17",type:"FOTO",text:"Fotografía sus sombras tocándose las manos.",illustration:"silhouette",for:"both"},
+      {id:"fotos-18",type:"FOTO",text:"Tomen una foto de un beso en el cuello con encuadre de hombros hacia arriba.",illustration:"photoNeck",for:"single"},
+      {id:"fotos-19",type:"FOTO",text:"Captura una pose frente con frente usando solo luz tenue.",illustration:"photoForehead",for:"both"},
+      {id:"fotos-20",type:"FOTO",text:"Elijan su pose romántica favorita y hagan una foto sin desnudos.",illustration:"pose",for:"both"}
+    ]
+  }
+};
+
+const levelOrder = ["conexion","coqueteo","intenso","extremo","fotos"];
+const state = {
+  names:["Persona 1","Persona 2"], level:null, deck:[], index:0, turn:0, favorites:new Set(),
+  fromScreen:"menu", timerId:null, timerEnds:0, timerDuration:30
+};
+
+const $ = sel => document.querySelector(sel);
+const screens = [...document.querySelectorAll(".screen")];
+const toast = $("#toast");
+
+function safeParse(json,fallback){try{return JSON.parse(json)}catch{return fallback}}
+function storageGet(key){try{return window.localStorage.getItem(key)}catch{return null}}
+function storageSet(key,value){try{window.localStorage.setItem(key,value)}catch{}}
+function loadPersisted(){
+  const favs=safeParse(storageGet("entreDosFavorites")||"[]",[]);
+  state.favorites=new Set(Array.isArray(favs)?favs:[]);
+  const names=safeParse(storageGet("entreDosNames")||"[]",[]);
+  if(Array.isArray(names)&&names.length===2&&names.every(Boolean)){
+    state.names=[String(names[0]).slice(0,22),String(names[1]).slice(0,22)];
+    $("#name1").value=state.names[0];$("#name2").value=state.names[1];
+  }
+}
+function saveFavorites(){storageSet("entreDosFavorites",JSON.stringify([...state.favorites]))}
+function showToast(msg){toast.textContent=msg;toast.classList.add("show");clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove("show"),1500)}
+function navigate(name){
+  screens.forEach(s=>s.classList.toggle("active",s.dataset.screen===name));
+  window.scrollTo(0,0);
+  if(name==="menu")renderMenu();
+  if(name==="favorites")renderFavorites();
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a;
+}
+function initialsColor(key){const d=gameData[key];return `linear-gradient(135deg,${d.c1},${d.c2})`}
+
+function renderMenu(){
+  const grid=$("#levelGrid");grid.innerHTML="";
+  levelOrder.forEach(key=>{
+    const d=gameData[key];
+    const b=document.createElement("button");
+    b.className="level-card"+(key==="fotos"?" photos":"");
+    b.style.setProperty("--c1",d.c1);b.style.setProperty("--c2",d.c2);
+    b.innerHTML=`<div class="level-row"><div class="level-icon">${d.icon}</div><span class="badge">20 cartas</span></div>
+      <h3>${d.name}</h3><p>${d.desc}</p><div class="level-meta">Abrir nivel →</div>`;
+    b.addEventListener("click",()=>startLevel(key));
+    grid.appendChild(b);
+  });
+}
+function startLevel(key){
+  state.level=key;state.deck=shuffle(gameData[key].cards);state.index=0;state.turn=0;
+  $("#completion").classList.remove("show");
+  $("#challengeCard").style.display="grid";
+  navigate("game");
+  renderCard();
+}
+function currentCard(){return state.deck[state.index]||null}
+function actorFor(card){
+  if(card.for==="both")return "Los dos";
+  return state.names[state.turn%2];
+}
+function renderCard(){
+  const card=currentCard();if(!card)return completeLevel();
+  const data=gameData[state.level];
+  $("#gameLevelName").textContent=`${data.icon} ${data.name}`;
+  $("#gameProgressText").textContent=`Carta ${state.index+1} de ${state.deck.length}`;
+  $("#gameProgress").style.width=`${((state.index+1)/state.deck.length)*100}%`;
+  $("#cardType").textContent=card.type;
+  $("#turnName").textContent=card.for==="both"?"Los dos":`Turno de ${actorFor(card)}`;
+  $("#cardNumber").textContent=`${state.index+1} / ${state.deck.length}`;
+  $("#cardText").textContent=card.text;
+  $("#cardHint").textContent=state.level==="fotos"?"La app no abre la cámara: hagan la foto con su propio teléfono.":"";
+  const chip=$("#durationChip");
+  if(card.duration){chip.textContent=`◷ ${card.duration} s`;chip.classList.add("show")}else chip.classList.remove("show");
+  $("#illustration").innerHTML=illustration(card.illustration);
+  updateFavoriteUI();
+  const el=$("#challengeCard");el.classList.remove("enter");void el.offsetWidth;el.classList.add("enter");
+}
+function advanceCard(){
+  const card=currentCard();
+  if(card&&card.for!=="both")state.turn++;
+  state.index++;
+  if(state.index>=state.deck.length)completeLevel();else renderCard();
+}
+function passCard(){advanceCard()}
+function completeLevel(){
+  $("#challengeCard").style.display="none";
+  $("#completion").classList.add("show");
+  const d=gameData[state.level];
+  $("#completionText").textContent=`Completaron las 20 cartas de ${d.name}.`;
+  const idx=levelOrder.indexOf(state.level);
+  $("#nextLevel").style.display=idx<levelOrder.length-1?"block":"none";
+  $("#gameProgress").style.width="100%";
+  $("#gameProgressText").textContent="Nivel completado";
+}
+function replayLevel(){startLevel(state.level)}
+function goNextLevel(){
+  const idx=levelOrder.indexOf(state.level);
+  if(idx>=0&&idx<levelOrder.length-1)startLevel(levelOrder[idx+1]);else navigate("menu");
+}
+function toggleFavorite(){
+  const card=currentCard();if(!card)return;
+  if(state.favorites.has(card.id)){state.favorites.delete(card.id);showToast("Quitada de favoritos")}
+  else{state.favorites.add(card.id);showToast("Guardada en favoritos")}
+  saveFavorites();updateFavoriteUI();
+}
+function updateFavoriteUI(){
+  const card=currentCard();const on=card&&state.favorites.has(card.id);
+  $("#favoriteHeart").textContent=on?"♥":"♡";$("#favoriteHeart").classList.toggle("on",!!on);
+  $("#favBtn").querySelector(".ico").textContent=on?"♥":"♡";
+}
+function findCard(id){
+  for(const key of levelOrder){const c=gameData[key].cards.find(x=>x.id===id);if(c)return {key,card:c}}
+  return null;
+}
+function renderFavorites(){
+  const list=$("#favoritesList");list.innerHTML="";
+  const items=[...state.favorites].map(findCard).filter(Boolean);
+  if(!items.length){list.innerHTML=`<div class="empty glass"><div style="font-size:2rem">♡</div><h3 style="margin:10px 0 6px">Aún no hay favoritos</h3><div class="muted">Marca una carta con el corazón durante el juego.</div></div>`;return}
+  items.forEach(({key,card})=>{
+    const item=document.createElement("div");item.className="fav-item glass";
+    item.innerHTML=`<div><div class="lvl">${gameData[key].name} · ${card.type}</div><p>${card.text}</p></div><button class="remove-fav" aria-label="Quitar de favoritos">♥</button>`;
+    item.querySelector("button").addEventListener("click",()=>{state.favorites.delete(card.id);saveFavorites();renderFavorites()});
+    list.appendChild(item);
+  });
+}
+
+/* timer */
+function openTimer(){
+  const card=currentCard();const suggested=card&&card.duration?Math.min(60,Math.max(15,[15,30,60].reduce((a,b)=>Math.abs(b-card.duration)<Math.abs(a-card.duration)?b:a,30))):30;
+  state.timerDuration=suggested;resetTimerVisual(suggested);$("#timerModal").classList.add("show");
+}
+function closeTimer(){clearInterval(state.timerId);state.timerId=null;$("#timerModal").classList.remove("show")}
+function resetTimerVisual(seconds){
+  $("#timerNumber").textContent=seconds;$("#timerCircle").style.setProperty("--p","0deg");$("#timerCircle").classList.remove("done");
+  $("#timerNote").textContent="Toca una duración para comenzar.";
+}
+function startTimer(seconds){
+  clearInterval(state.timerId);state.timerDuration=seconds;state.timerEnds=Date.now()+seconds*1000;
+  $("#timerNote").textContent="Tiempo en marcha";
+  const tick=()=>{
+    const left=Math.max(0,Math.ceil((state.timerEnds-Date.now())/1000));
+    const elapsed=seconds-left;$("#timerNumber").textContent=left;
+    $("#timerCircle").style.setProperty("--p",`${Math.min(360,(elapsed/seconds)*360)}deg`);
+    if(left<=0){
+      clearInterval(state.timerId);state.timerId=null;$("#timerCircle").style.setProperty("--p","360deg");$("#timerCircle").classList.add("done");$("#timerNote").textContent="Listo ✦";
+    }
+  };
+  tick();state.timerId=setInterval(tick,200);
+}
+
+/* SVG illustrations */
+function person(x,y,scale,color,pose="stand"){
+  const fill=color;
+  if(pose==="sit")return `<circle cx="${x}" cy="${y}" r="${16*scale}" fill="${fill}"/><path d="M ${x} ${y+18*scale} L ${x} ${y+62*scale} L ${x-30*scale} ${y+88*scale} M ${x} ${y+52*scale} L ${x+38*scale} ${y+70*scale}" stroke="${fill}" stroke-width="${14*scale}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+  if(pose==="recline")return `<circle cx="${x}" cy="${y}" r="${16*scale}" fill="${fill}"/><path d="M ${x+13*scale} ${y+16*scale} Q ${x+55*scale} ${y+38*scale} ${x+92*scale} ${y+43*scale} M ${x+54*scale} ${y+39*scale} L ${x+112*scale} ${y+65*scale}" stroke="${fill}" stroke-width="${14*scale}" stroke-linecap="round" fill="none"/>`;
+  return `<circle cx="${x}" cy="${y}" r="${16*scale}" fill="${fill}"/><path d="M ${x} ${y+20*scale} L ${x} ${y+78*scale} M ${x} ${y+45*scale} L ${x-28*scale} ${y+66*scale} M ${x} ${y+45*scale} L ${x+28*scale} ${y+66*scale} M ${x} ${y+78*scale} L ${x-22*scale} ${y+120*scale} M ${x} ${y+78*scale} L ${x+22*scale} ${y+120*scale}" stroke="${fill}" stroke-width="${14*scale}" stroke-linecap="round" fill="none"/>`;
+}
+function svgWrap(inner,extra=""){return `<svg viewBox="0 0 320 220" role="img" aria-label="Ilustración abstracta"><defs><linearGradient id="pg" x1="0" x2="1"><stop stop-color="#ff4f96"/><stop offset="1" stop-color="#b05cff"/></linearGradient></defs>${extra}${inner}</svg>`}
+function illustration(type){
+  const P="url(#pg)", W="#fff7fb", M="#f4a4c6";
+  switch(type){
+    case"gaze":return svgWrap(`${person(115,52,.78,P)}${person(205,52,.78,W)}<path d="M145 58 Q160 48 175 58" stroke="${M}" stroke-width="4" stroke-linecap="round"/><circle cx="160" cy="50" r="4" fill="${M}"/>`);
+    case"hug":return svgWrap(`${person(132,46,.8,P)}${person(188,46,.8,W)}<path d="M132 92 Q160 114 188 92 M188 92 Q160 116 132 92" stroke="${M}" stroke-width="8" fill="none" stroke-linecap="round"/>`);
+    case"forehead":return svgWrap(`${person(132,48,.8,P)}${person(188,48,.8,W)}<path d="M149 48 L171 48" stroke="${M}" stroke-width="5" stroke-linecap="round"/>`);
+    case"hands":return svgWrap(`<path d="M70 126 Q112 90 152 126 Q188 90 250 126" stroke="${P}" stroke-width="22" fill="none" stroke-linecap="round"/><path d="M150 124 Q164 105 178 124" stroke="${W}" stroke-width="18" fill="none" stroke-linecap="round"/>`);
+    case"face":return svgWrap(`${person(186,44,.84,W)}<path d="M88 124 Q130 94 160 76" stroke="${P}" stroke-width="16" fill="none" stroke-linecap="round"/><circle cx="164" cy="72" r="8" fill="${P}"/>`);
+    case"kiss":case"nearKiss":case"faceKiss":return svgWrap(`${person(128,50,.8,P)}${person(190,50,.8,W)}<path d="M148 62 Q160 54 171 62" stroke="${M}" stroke-width="5" stroke-linecap="round"/><path d="M154 38 l8 -10 l8 10" stroke="${M}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`);
+    case"neck":return svgWrap(`${person(188,42,.85,W)}${person(114,80,.72,P)}<path d="M128 95 Q150 80 167 70" stroke="${P}" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M161 63 l8 -5 l5 9" stroke="${M}" stroke-width="4" fill="none"/>`);
+    case"waist":return svgWrap(`${person(182,42,.85,W)}<path d="M78 136 Q126 104 176 110" stroke="${P}" stroke-width="18" fill="none" stroke-linecap="round"/><circle cx="178" cy="110" r="9" fill="${P}"/>`);
+    case"arm":return svgWrap(`${person(188,42,.84,W)}<path d="M72 144 Q122 118 165 102" stroke="${P}" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="168" cy="101" r="7" fill="${P}"/>`);
+    case"hair":return svgWrap(`${person(188,44,.85,W)}<path d="M110 78 Q142 52 168 48" stroke="${P}" stroke-width="15" fill="none" stroke-linecap="round"/>`);
+    case"back":return svgWrap(`${person(185,44,.85,W)}<path d="M105 80 Q135 105 164 132" stroke="${P}" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M167 73 Q150 104 163 140" stroke="${M}" stroke-width="5" fill="none" stroke-linecap="round"/>`);
+    case"shoulder":return svgWrap(`${person(190,45,.82,W)}${person(118,76,.68,P)}<path d="M133 96 Q151 88 167 86" stroke="${P}" stroke-width="13" fill="none" stroke-linecap="round"/>`);
+    case"seated":return svgWrap(`${person(120,66,.72,P,"sit")}${person(202,66,.72,W,"sit")}`);
+    case"seatedFace":return svgWrap(`${person(132,58,.72,P,"sit")}${person(188,58,.72,W,"sit")}<path d="M150 65 L170 65" stroke="${M}" stroke-width="4"/>`);
+    case"backHug":return svgWrap(`${person(166,44,.83,W)}${person(128,50,.78,P)}<path d="M120 103 Q150 116 178 102" stroke="${M}" stroke-width="8" fill="none" stroke-linecap="round"/>`);
+    case"recline":return svgWrap(`${person(78,100,.75,P,"recline")}${person(116,82,.75,W,"recline")}`);
+    case"thigh":return svgWrap(`${person(185,38,.8,W,"sit")}${person(104,96,.68,P)}<path d="M120 112 Q150 130 180 140" stroke="${M}" stroke-width="6" fill="none" stroke-linecap="round"/>`);
+    case"trail":return svgWrap(`${person(188,38,.83,W)}${person(108,70,.68,P)}<path d="M142 68 Q166 86 164 108 Q162 132 180 153" stroke="${M}" stroke-width="5" stroke-dasharray="7 8" fill="none"/><circle cx="143" cy="68" r="5" fill="${M}"/><circle cx="180" cy="153" r="5" fill="${M}"/>`);
+    case"whisper":return svgWrap(`${person(185,44,.82,W)}${person(116,60,.74,P)}<path d="M140 66 Q157 58 169 62" stroke="${M}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="150" cy="52" r="3" fill="${M}"/>`);
+    case"choice":return svgWrap(`<circle cx="116" cy="112" r="44" fill="rgba(255,79,150,.12)" stroke="#ff6ea9"/><text x="116" y="126" text-anchor="middle" font-size="42" font-weight="800" fill="#fff">?</text><circle cx="210" cy="112" r="44" fill="rgba(156,108,255,.12)" stroke="#aa83ff"/><path d="M194 112 l11 12 l23 -28" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`);
+    case"pose":return svgWrap(`${person(130,52,.75,P,"sit")}${person(194,52,.75,W,"sit")}<path d="M146 94 Q160 108 176 94" stroke="${M}" stroke-width="7" fill="none" stroke-linecap="round"/>`);
+    case"photoForehead":return svgWrap(`${person(132,56,.74,P)}${person(188,56,.74,W)}<rect x="64" y="32" width="192" height="154" rx="24" fill="none" stroke="${M}" stroke-width="5"/><circle cx="160" cy="110" r="58" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="4"/>`);
+    case"photoNeck":return svgWrap(`${person(188,42,.8,W)}${person(118,78,.68,P)}<rect x="58" y="28" width="204" height="164" rx="25" fill="none" stroke="${M}" stroke-width="5"/>`);
+    case"photoHands":return svgWrap(`<rect x="54" y="30" width="212" height="160" rx="25" fill="none" stroke="${M}" stroke-width="5"/><path d="M80 132 Q125 96 158 128 Q190 96 244 132" stroke="${P}" stroke-width="20" fill="none" stroke-linecap="round"/>`);
+    case"photoKiss":return svgWrap(`${person(130,54,.74,P)}${person(190,54,.74,W)}<rect x="58" y="30" width="204" height="160" rx="25" fill="none" stroke="${M}" stroke-width="5"/><path d="M149 64 Q160 58 171 64" stroke="${M}" stroke-width="4"/>`);
+    case"photoWaist":return svgWrap(`${person(188,42,.8,W)}<path d="M84 132 Q130 110 176 112" stroke="${P}" stroke-width="17" fill="none" stroke-linecap="round"/><rect x="58" y="28" width="204" height="164" rx="25" fill="none" stroke="${M}" stroke-width="5"/>`);
+    case"silhouette":return svgWrap(`${person(132,48,.8,"#cf4f86")}${person(188,48,.8,"#8d78c7")}<circle cx="160" cy="112" r="90" fill="rgba(255,255,255,.025)"/>`);
+    case"mirror":return svgWrap(`<rect x="72" y="22" width="176" height="176" rx="26" fill="none" stroke="${M}" stroke-width="5"/>${person(136,52,.68,P)}${person(184,52,.68,W)}<path d="M82 38 L236 182" stroke="rgba(255,255,255,.08)" stroke-width="4"/>`);
+    case"heart":return svgWrap(`<path d="M160 176 C70 126 88 52 128 52 C148 52 158 66 160 76 C162 66 172 52 192 52 C232 52 250 126 160 176Z" fill="url(#pg)"/><circle cx="126" cy="84" r="10" fill="rgba(255,255,255,.22)"/>`);
+    case"memory":return svgWrap(`<rect x="84" y="46" width="152" height="124" rx="24" fill="rgba(255,255,255,.06)" stroke="${M}" stroke-width="4"/><circle cx="126" cy="92" r="20" fill="url(#pg)"/><path d="M106 146 l38 -32 l25 22 l23 -17 l22 27" stroke="${W}" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`);
+    case"spark":return svgWrap(`<path d="M160 38 L174 92 L228 106 L174 120 L160 174 L146 120 L92 106 L146 92Z" fill="url(#pg)"/><circle cx="228" cy="58" r="9" fill="${M}"/><circle cx="96" cy="164" r="7" fill="${W}"/>`);
+    default:return svgWrap(`${person(132,48,.8,P)}${person(188,48,.8,W)}<path d="M142 104 Q160 120 178 104" stroke="${M}" stroke-width="7" fill="none" stroke-linecap="round"/>`);
+  }
+}
+
+/* events */
+$("#coverStart").addEventListener("click",()=>navigate("config"));
+document.querySelectorAll("[data-nav]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.nav)));
+["name1","name2"].forEach(id=>$("#"+id).addEventListener("input",validateConfig));
+$("#consent").addEventListener("change",validateConfig);
+function validateConfig(){
+  const a=$("#name1").value.trim(),b=$("#name2").value.trim(),ok=$("#consent").checked&&a&&b;
+  $("#enterGame").disabled=!ok;
+}
+$("#enterGame").addEventListener("click",()=>{
+  const a=$("#name1").value.trim(),b=$("#name2").value.trim();if(!a||!b||!$("#consent").checked)return;
+  state.names=[a,b];storageSet("entreDosNames",JSON.stringify(state.names));navigate("menu");
+});
+$("#menuFavorites").addEventListener("click",()=>{state.fromScreen="menu";navigate("favorites")});
+$("#menuFavTop").addEventListener("click",()=>{state.fromScreen="menu";navigate("favorites")});
+$("#gameFavTop").addEventListener("click",()=>{state.fromScreen="game";navigate("favorites")});
+$("#favBack").addEventListener("click",()=>navigate(state.fromScreen==="game"?"game":"menu"));
+$("#gameHomeTop").addEventListener("click",()=>navigate("menu"));
+$("#homeBtn").addEventListener("click",()=>navigate("menu"));
+$("#nextBtn").addEventListener("click",advanceCard);
+$("#passBtn").addEventListener("click",passCard);
+$("#favoriteHeart").addEventListener("click",toggleFavorite);
+$("#favBtn").addEventListener("click",toggleFavorite);
+$("#timerBtn").addEventListener("click",openTimer);
+$("#closeTimer").addEventListener("click",closeTimer);
+$("#timerModal").addEventListener("click",e=>{if(e.target===$("#timerModal"))closeTimer()});
+$("#timerOptions").addEventListener("click",e=>{const b=e.target.closest("[data-seconds]");if(b)startTimer(Number(b.dataset.seconds))});
+$("#replayLevel").addEventListener("click",replayLevel);
+$("#nextLevel").addEventListener("click",goNextLevel);
+$("#chooseLevel").addEventListener("click",()=>navigate("menu"));
+
+loadPersisted();validateConfig();renderMenu();
+</script>
+</body>
+</html>
