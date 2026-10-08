@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#09050d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Entre Dos</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <div class="ambient" aria-hidden="true">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <span class="spark" style="left:13%;top:17%"></span><span class="spark" style="left:78%;top:11%"></span>
+    <span class="spark" style="left:66%;top:63%"></span><span class="spark" style="left:23%;top:72%"></span>
+  </div>
+
+  <section id="cover" class="screen active" data-screen="cover">
+    <div class="cover-wrap">
+      <div class="cover-top">
+        <div class="cover-mark"><span class="badge">Juego privado · 18+</span></div>
+        <div class="cover-logo">ENTRE <span class="accent">DOS</span></div>
+        <h1 class="cover-title">Una noche para acercarse.</h1>
+        <p class="cover-sub">Cartas, retos y momentos diseñados para disfrutarse entre dos.</p>
+      </div>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-ring"></div><div class="orbit-ring r2"></div><div class="orbit-heart"></div>
+      </div>
+      <div class="cover-cta"><button id="coverStart" class="btn primary">Comenzar</button></div>
+    </div>
+  </section>
+
+  <section id="config" class="screen" data-screen="config">
+    <div class="shell">
+      <div class="toprow"><button class="iconbtn" data-nav="cover" aria-label="Volver">←</button><div class="brand-mini">ENTRE DOS</div><span></span></div>
+      <div class="config-card glass" style="margin-top:24px">
+        <div class="eyebrow">Antes de empezar</div>
+        <h2 class="h1">¿Quién juega esta noche?</h2>
+        <p class="muted" style="margin:0">Usaremos sus nombres dentro de las cartas y turnos.</p>
+        <div class="field"><label for="name1">Persona 1</label><input id="name1" maxlength="22" autocomplete="off" placeholder="Nombre"></div>
+        <div class="field"><label for="name2">Persona 2</label><input id="name2" maxlength="22" autocomplete="off" placeholder="Nombre"></div>
+        <div class="rule">
+          <div class="eyebrow">Regla principal</div>
+          <p style="margin:8px 0 0;line-height:1.5">Todo se hace con consentimiento mutuo. Cualquiera puede decir <strong>Paso</strong> en cualquier momento.</p>
+        </div>
+        <label class="checkrow"><input id="consent" type="checkbox"><span>Ambos somos adultos y participamos voluntariamente.</span></label>
+        <div class="config-actions"><button id="enterGame" class="btn primary" disabled>Entrar al juego</button></div>
+        <p class="muted" style="font-size:.75rem;text-align:center;margin:14px 0 0">Todo funciona localmente en este dispositivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="screen" data-screen="menu">
+    <div class="menu-shell">
+      <div class="toprow"><div class="brand-mini">ENTRE DOS</div><button id="menuFavTop" class="iconbtn" aria-label="Favoritos">♡</button></div>
+      <header class="menu-head">
+        <div class="eyebrow">Elijan el ambiente</div>
+        <h2 class="menu-title">¿Qué quieren sentir?</h2>
+        <p class="muted" style="margin:0">Los niveles Extremo y Fotos usan bancos amplios de cartas para que cada partida cambie y Paso no repita una carta ya vista.</p>
+      </header>
+      <div id="levelGrid" class="level-grid"></div>
+      <div class="menu-fav"><button id="menuFavorites" class="btn secondary">♡ Nuestros favoritos</button></div>
+    </div>
+  </section>
+
+  <section id="game" class="screen" data-screen="game">
+    <div class="game-shell">
+      <div class="game-top">
+        <button id="gameHomeTop" class="iconbtn" aria-label="Volver al menú">⌂</button>
+        <div class="game-level"><div id="gameLevelName" class="name">Nivel</div><div id="gameProgressText" class="progressText">0 completadas</div></div>
+        <button id="gameFavTop" class="iconbtn" aria-label="Ver favoritos">♡</button>
+      </div>
+      <div class="progress"><span id="gameProgress"></span></div>
+      <div id="cardWrap" class="card-wrap">
+        <article id="challengeCard" class="challenge-card">
+          <div class="card-top">
+            <div><div id="cardType" class="card-type">TIPO</div><div id="turnName" class="turn-name">Turno</div></div>
+            <div id="cardNumber" class="card-num">Pendientes</div>
+          </div>
+          <div class="card-copy">
+            <h2 id="cardText">Carta</h2>
+            <p id="cardHint" class="card-hint"></p>
+          </div>
+          <div id="illustration" class="illustration" aria-hidden="true"></div>
+          <div class="card-bottom">
+            <span id="durationChip" class="duration-chip">◷ 30 s</span>
+            <button id="favoriteHeart" class="favorite-heart" aria-label="Agregar a favoritos">♡</button>
+          </div>
+        </article>
+        <div id="completion" class="completion glass">
+          <div class="big">✦</div>
+          <div class="eyebrow">Nivel completado</div>
+          <h2>Han completado este nivel</h2>
+          <p id="completionText">Ronda terminada.</p>
+          <div class="completion-actions">
+            <button id="replayLevel" class="btn primary">Volver a jugar</button>
+            <button id="nextLevel" class="btn secondary">Ir al siguiente nivel</button>
+            <button id="chooseLevel" class="btn secondary">Elegir otro nivel</button>
+          </div>
+        </div>
+      </div>
+      <nav class="game-actions" aria-label="Acciones del juego">
+        <button id="passBtn" class="action-btn"><span class="ico">↷</span><span>Paso</span></button>
+        <button id="nextBtn" class="action-btn next"><span class="ico">→</span><span>Siguiente</span></button>
+        <button id="favBtn" class="action-btn"><span class="ico">♡</span><span>Favorito</span></button>
+        <button id="timerBtn" class="action-btn"><span class="ico">◷</span><span>Temporizador</span></button>
+        <button id="homeBtn" class="action-btn"><span class="ico">⌂</span><span>Inicio</span></button>
+      </nav>
+    </div>
+  </section>
+
+  <section id="favorites" class="screen" data-screen="favorites">
+    <div class="fav-shell">
+      <div class="toprow"><button id="favBack" class="iconbtn" aria-label="Volver">←</button><div class="brand-mini">ENTRE DOS</div><span></span></div>
+      <div style="margin-top:22px"><div class="eyebrow">Guardadas por ustedes</div><h2 class="h1" style="margin-top:10px">Nuestros favoritos</h2><p class="muted" style="margin:0">Las cartas marcadas con corazón aparecen aquí.</p></div>
+      <div id="favoritesList" class="fav-list"></div>
+    </div>
+  </section>
+
+  <div id="extremeIntro" class="modal" role="dialog" aria-modal="true" aria-labelledby="extremeTitle">
+    <div class="timer-sheet">
+      <div class="eyebrow">EXTREMO</div>
+      <h3 id="extremeTitle" style="margin:8px 0 10px;font-size:1.55rem">Antes de comenzar</h3>
+      <p class="muted" style="line-height:1.55;margin:0 0 14px">Este nivel comienza únicamente cuando ambos estén en ropa interior.</p>
+      <div class="rule" style="margin:12px 0 16px">
+        <strong>Continúen solo si los dos quieren.</strong><br><br>
+        El objetivo es completar 16 retos. Las 4 cartas de prenda aparecerán repartidas durante la partida. Cualquiera puede decir Paso en cualquier momento.
+      </div>
+      <div style="display:grid;gap:10px">
+        <button id="acceptExtreme" class="btn primary">Estamos listos</button>
+        <button id="cancelExtreme" class="btn secondary">Volver al menú</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="timerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="timerTitle">
+    <div class="timer-sheet">
+      <div class="timer-head"><div><div class="eyebrow">Temporizador</div><h3 id="timerTitle" style="margin:5px 0 0;font-size:1.45rem">Elige una duración</h3></div><button id="closeTimer" class="iconbtn" aria-label="Cerrar">×</button></div>
+      <div id="timerOptions" class="timer-options">
+        <button class="btn secondary" data-seconds="15">15 s</button>
+        <button class="btn secondary" data-seconds="30">30 s</button>
+        <button class="btn secondary" data-seconds="60">60 s</button>
+      </div>
+      <div id="timerCircle" class="timer-circle"><span id="timerNumber" class="timer-number">30</span></div>
+      <div id="timerNote" class="timer-note">Toca una duración para comenzar.</div>
+    </div>
+  </div>
+  <div id="toast" class="toast" aria-live="polite"></div>
+</div>
+</body>
+</html>
