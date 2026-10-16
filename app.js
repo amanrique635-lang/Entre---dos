@@ -2,7 +2,7 @@ const gameData = {
   "conexion": {
     "name": "Conexión",
     "icon": "✦",
-    "desc": "Conversación, confianza y momentos para mirarse de verdad.",
+    "desc": "Para empezar cerca: conversación, miradas y pequeños momentos de conexión.",
     "c1": "#803b78",
     "c2": "#3d275f",
     "cards": [
@@ -26,7 +26,7 @@ const gameData = {
   "coqueteo": {
     "name": "Coqueteo",
     "icon": "♡",
-    "desc": "Besos, tensión ligera y contacto suave que sube poco a poco.",
+    "desc": "Besos, caricias y tensión ligera para subir el ambiente poco a poco.",
     "c1": "#b62f72",
     "c2": "#6d2c91",
     "cards": [
@@ -50,7 +50,7 @@ const gameData = {
   "intenso": {
     "name": "Intenso",
     "icon": "◆",
-    "desc": "Cercanía sostenida, besos más largos y poses íntimas sin ser explícitas.",
+    "desc": "Más contacto, más cercanía y retos que elevan la intensidad sin saltarse etapas.",
     "c1": "#9e245a",
     "c2": "#7b2dbe",
     "cards": [
@@ -71,10 +71,265 @@ const gameData = {
       { "id": "intenso-15", "type": "ANTICIPACIÓN", "text": "Acércate para besar y haz una pausa de cinco segundos antes de tocar sus labios.", "illustration": "nearKiss", "for": "single", "duration": 20 }
     ]
   },
+  "extremo1": {
+    "name": "Extremo Nivel 1",
+    "icon": "✹",
+    "desc": "Una primera entrada a los retos más atrevidos, con anticipación, prendas y mayor cercanía.",
+    "c1": "#a3265f",
+    "c2": "#7032a8",
+    "target": 16,
+    "bothUnlockAt": 8,
+    "cards": [
+      {
+        "id": "extremo1-01",
+        "type": "POSE",
+        "text": "Uno se sienta al borde de la cama y el otro se acomoda entre sus piernas, frente a frente. Abrácense por la cintura, unan sus zonas íntimas y muévanse lentamente guiándose solo por la respiración.",
+        "illustration": "seatedFace",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-02",
+        "type": "POSE",
+        "text": "Acuéstense de lado, pecho con espalda. Quien está detrás guía el movimiento de las caderas de forma suave y profunda, mientras acaricia libremente el cuerpo de su pareja.",
+        "illustration": "backHug",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-03",
+        "type": "MUSLOS",
+        "text": "Recorre con besos lentos y caricias ambos muslos de tu pareja, subiendo poco a poco hasta su zona más sensible y deteniéndote justo al borde.",
+        "illustration": "thigh",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-04",
+        "type": "PRENDA 1 - OBLIGATORIA",
+        "text": "Tu pareja te quita lentamente una prenda mientras mantienes la mirada. Disfruta de la anticipación y el roce de sus manos sin hacer nada más.",
+        "illustration": "silhouette",
+        "for": "single",
+        "preserveText": true,
+        "clothing": true,
+        "mandatory": true,
+        "actorIndex": 0
+      },
+      {
+        "id": "extremo1-05",
+        "type": "GUÍA",
+        "text": "Uno guía las manos del otro hacia las zonas exactas donde quiere recibir estimulación, marcando el ritmo y la presión deseada.",
+        "illustration": "hands",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-06",
+        "type": "POSE",
+        "text": "El hombre se recuesta boca arriba y la mujer se sube a horcajadas. Mantengan el contacto visual mientras ella toma el control absoluto del ritmo y la fricción.",
+        "illustration": "recline",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-07",
+        "type": "POSE",
+        "text": "La mujer se recuesta al borde de la cama, dejando caer las piernas hacia atrás. El hombre se sitúa de pie o de rodillas frente a ella, aprovechando el acceso total para marcar la intensidad.",
+        "illustration": "pose",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-08",
+        "type": "POSE",
+        "text": "Ambos arrodillados sobre la cama, acerquen sus cuerpos hasta que los torsos se toquen. Uno rodea la cintura y el otro el cuello, buscando el roce mutuo con movimientos circulares.",
+        "illustration": "pose",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-09",
+        "type": "ZONA ÍNTIMA",
+        "text": "Dedica toda tu atención a estimular la zona íntima que tu pareja elija, usando tus manos y tu boca para llevarla al límite hasta que te pida detenerte.",
+        "illustration": "choice",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-10",
+        "type": "POSE",
+        "text": "Uno se inclina hacia delante apoyándose sobre la cama. El otro se coloca detrás, pegando completamente sus caderas y dictando la profundidad del movimiento.",
+        "illustration": "pose",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-11",
+        "type": "PRENDA 2 - OBLIGATORIA",
+        "text": "Deja que tu pareja elija una prenda y sea quien te la retire despacio, recorriendo con sus manos y besos tu piel a medida que la tela desaparece.",
+        "illustration": "silhouette",
+        "for": "single",
+        "preserveText": true,
+        "clothing": true,
+        "mandatory": true,
+        "actorIndex": 1
+      },
+      {
+        "id": "extremo1-12",
+        "type": "JUEGO MUTUO",
+        "text": "Ambos eligen una zona íntima del otro y juegan simultáneamente. Enfóquense en dar y recibir placer al mismo tiempo, comunicándose sin palabras.",
+        "illustration": "heart",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-13",
+        "type": "POSE",
+        "text": "El hombre se sienta con las piernas cruzadas o extendidas. La mujer se sienta sobre su regazo, rodeando su cintura con las piernas, moviéndose en sincronía con los cuerpos unidos.",
+        "illustration": "seatedFace",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-14",
+        "type": "POSE",
+        "text": "La mujer se recuesta boca arriba y eleva sus piernas sobre los hombros del hombre, permitiendo una cercanía mucho más profunda mientras él controla el avance.",
+        "illustration": "recline",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-15",
+        "type": "POSE",
+        "text": "La mujer se apoya de espaldas contra la pared. El hombre se acerca de frente, levanta una de sus piernas y la sostiene por el muslo, marcando la fuerza del acercamiento.",
+        "illustration": "pose",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-16",
+        "type": "POSE",
+        "text": "El hombre se sienta al borde de la cama. La mujer se sienta sobre su regazo dándole la espalda, tomando el control de la fricción íntima mientras él acaricia sus pechos.",
+        "illustration": "seated",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-17",
+        "type": "POSE",
+        "text": "La mujer se recuesta boca abajo. El hombre se coloca encima, buscando el roce y la fricción mientras su peso la presiona de forma envolvente contra el colchón.",
+        "illustration": "recline",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-18",
+        "type": "PRENDA 3 - OBLIGATORIA",
+        "text": "Tu pareja retira una de tus prendas sin prisa; tú decides el ritmo en el que se acerca a tus zonas más sensibles mientras quedas al descubierto.",
+        "illustration": "silhouette",
+        "for": "single",
+        "preserveText": true,
+        "clothing": true,
+        "mandatory": true,
+        "actorIndex": 0
+      },
+      {
+        "id": "extremo1-19",
+        "type": "POSE",
+        "text": "La mujer recostada boca arriba y el hombre encima, sosteniendo su peso con los brazos. Mantengan un movimiento constante y extremadamente lento, sintiendo el roce de los pechos.",
+        "illustration": "recline",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-20",
+        "type": "ALTA TENSIÓN",
+        "text": "Únanse en la postura que prefieran, pero quédense completamente quietos una vez conectados. Sientan solo la respiración y el latido del otro antes de empezar a moverse.",
+        "illustration": "recline",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-21",
+        "type": "ESTIMULACIÓN",
+        "text": "Acuéstense en posición invertida, uno frente a la intimidad del otro. Dedíquense a estimularse mutuamente, dictando cada uno la intensidad de lo que desea recibir.",
+        "illustration": "heart",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-22",
+        "type": "POSE",
+        "text": "La mujer se recuesta y levanta ambas piernas en forma de 'V'. El hombre se arrodilla frente a ella, dictando la profundidad y el ángulo del acercamiento.",
+        "illustration": "recline",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-23",
+        "type": "POSE",
+        "text": "El hombre se sienta en una silla firme y la mujer se sube a horcajadas frente a frente, usando la postura para un movimiento vertical y rítmico dominado por ella.",
+        "illustration": "seatedFace",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-24",
+        "type": "POSE",
+        "text": "El hombre se recuesta boca arriba y la mujer se sube a horcajadas dándole la espalda, controlando la fricción mientras él tiene acceso libre a sus caderas y muslos desde abajo.",
+        "illustration": "seated",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-25",
+        "type": "PRENDA 4 - OBLIGATORIA",
+        "text": "Permite que tu pareja te quite la última prenda que hayan acordado retirar, manteniendo los cuerpos muy cerca y combinando el momento con un beso intenso.",
+        "illustration": "silhouette",
+        "for": "single",
+        "preserveText": true,
+        "clothing": true,
+        "mandatory": true,
+        "actorIndex": 1
+      },
+      {
+        "id": "extremo1-26",
+        "type": "RECORRIDO",
+        "text": "Uno se acuesta boca arriba con los brazos estirados. El otro recorre todo su cuerpo con besos húmedos, bajando desde el cuello hasta la parte interna de los muslos.",
+        "illustration": "trail",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-27",
+        "type": "ANTICIPACIÓN",
+        "text": "Quien recibe el turno cierra los ojos y se deja llevar. Tu pareja estimulará tus zonas más sensibles rozando apenas la piel, jugando con la desesperación de querer más.",
+        "illustration": "gaze",
+        "for": "single",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-28",
+        "type": "POSE",
+        "text": "La mujer se coloca sobre manos y rodillas en la cama. El hombre recorre su espalda y caderas con caricias fuertes, preparándola antes de unir sus cuerpos lentamente desde atrás.",
+        "illustration": "pose",
+        "for": "both",
+        "preserveText": true
+      },
+      {
+        "id": "extremo1-29",
+        "type": "ESPEJO",
+        "text": "Colóquense frente al espejo. Quien está detrás abraza a su pareja, estimulando su pecho y zonas íntimas mientras ambos observan el reflejo de lo que está sucediendo.",
+        "illustration": "mirror",
+        "for": "both",
+        "preserveText": true
+      }
+    ]
+  },
   "extremo": {
-    "name": "Extremo",
+    "name": "Extremo Nivel 2",
     "icon": "✺",
-    "desc": "Banco de 50 retos. Completen 25 por partida; las 4 cartas de prenda aparecen antes de la carta 20.",
+    "desc": "La fase más intensa del juego, con retos directos y una selección distinta en cada partida.",
     "c1": "#7b193f",
     "c2": "#5a248f",
     "target": 25,
@@ -499,7 +754,7 @@ const gameData = {
   "poses": {
     "name": "Posiciones Íntimas",
     "icon": "✧",
-    "desc": "Banco de 25 posiciones. Completen 15 distintas por partida sin repetir ninguna.",
+    "desc": "Cambien el ritmo con posiciones íntimas elegidas al azar para explorar juntos.",
     "c1": "#d92525",
     "c2": "#6b0c1e",
     "target": 15,
@@ -710,7 +965,7 @@ const gameData = {
   "fotos": {
     "name": "Fotos",
     "icon": "◉",
-    "desc": "Banco de 39 cartas en dos etapas: 10 con ropa interior y 29 de reserva para la segunda etapa.",
+    "desc": "Una sesión privada en dos etapas: primero con ropa interior y después una fase más atrevida.",
     "c1": "#8f316e",
     "c2": "#38509a",
     "target": 20,
@@ -994,7 +1249,7 @@ const gameData = {
   }
 };
 
-const levelOrder = ["conexion", "coqueteo", "intenso", "extremo", "poses", "fotos"];
+const levelOrder = ["conexion", "coqueteo", "intenso", "extremo1", "extremo", "poses", "fotos"];
 const state = {
   names: ["Persona 1", "Persona 2"],
   level: null,
@@ -1020,6 +1275,7 @@ const state = {
   photoStage: null,
   photoUnderwearCompleted: 0,
   photoSkinCompleted: 0,
+  photoTurnIndex: 0,
   photoUnderwearDeck: [],
   photoSkinDeck: [],
   timerId: null,
@@ -1077,11 +1333,18 @@ function renderMenu() {
     b.style.setProperty("--c1", d.c1);
     b.style.setProperty("--c2", d.c2);
     const target = d.target || d.cards.length;
-    const badge = d.cards.length === target
-      ? `${d.cards.length} cartas`
-      : `${d.cards.length} en banco · ${target} por partida`;
+    const badge = d.target ? `${target} por partida` : `${d.cards.length} cartas`;
+    const metaByLevel = {
+      conexion: "Conectar · Empezar suave →",
+      coqueteo: "Coquetear · Subir el ambiente →",
+      intenso: "Intensidad media →",
+      extremo1: "Atrevido · Nivel 1 →",
+      extremo: "Máxima intensidad · Nivel 2 →",
+      poses: "Explorar posiciones →",
+      fotos: "Sesión privada →"
+    };
     b.innerHTML = `<div class="level-row"><div class="level-icon">${d.icon}</div><span class="badge">${badge}</span></div>
-      <h3>${d.name}</h3><p>${d.desc}</p><div class="level-meta">Abrir nivel →</div>`;
+      <h3>${d.name}</h3><p>${d.desc}</p><div class="level-meta">${metaByLevel[key] || "Abrir nivel →"}</div>`;
     b.addEventListener("click", () => startLevel(key));
     grid.appendChild(b);
   });
@@ -1094,7 +1357,13 @@ function buildInitialDeck(key) {
   state.mandatorySlots = [];
   state.mandatoryIndex = 0;
   state.bothUnlockAt = gameData[key].bothUnlockAt || 0;
-  state.noRepeatSession = key === "extremo" || key === "poses" || key === "fotos";
+  state.noRepeatSession = key === "extremo1" || key === "extremo" || key === "poses" || key === "fotos";
+
+  if (key === "extremo1") {
+    state.mandatoryCards = cards.filter(card => card.mandatory);
+    state.mandatorySlots = [4, 8, 12, 16];
+    return shuffle(cards.filter(card => !card.mandatory));
+  }
 
   if (key === "extremo") {
     state.mandatoryCards = cards.filter(card => card.mandatory);
@@ -1127,6 +1396,7 @@ function launchLevel(key) {
   state.completed = 0;
   state.shownCount = 0;
   state.turn = 0;
+  state.photoTurnIndex = 0;
   state.passes = 0;
   state.deferred = [];
   state.skipped = [];
@@ -1140,6 +1410,11 @@ function launchLevel(key) {
 }
 
 function startLevel(key) {
+  if (key === "extremo1") {
+    state.pendingLevel = key;
+    $("#extreme1Intro").classList.add("show");
+    return;
+  }
   if (key === "extremo") {
     state.pendingLevel = key;
     $("#extremeIntro").classList.add("show");
@@ -1161,7 +1436,7 @@ function registerDraw(card) {
 }
 
 function takeMandatoryIfDue() {
-  if (state.level !== "extremo") return null;
+  if (state.level !== "extremo1" && state.level !== "extremo") return null;
   if (state.mandatoryIndex >= state.mandatoryCards.length) return null;
 
   const dueAtShownCard = state.mandatorySlots[state.mandatoryIndex];
@@ -1185,7 +1460,7 @@ function drawNextCard(excludeId = null) {
   if (mandatory) return registerDraw(mandatory);
 
   if (state.noRepeatSession) {
-    if (state.level === "extremo" && state.shownCount < state.bothUnlockAt) {
+    if ((state.level === "extremo1" || state.level === "extremo") && state.shownCount < state.bothUnlockAt) {
       const individualIndex = state.unseen.findIndex(card =>
         !state.seen.has(card.id) &&
         card.id !== excludeId &&
@@ -1237,6 +1512,18 @@ function targetFor(card) {
 }
 
 function personalizeCardText(card) {
+  if (state.level === "fotos") {
+    let clean = String(card.text || "").trim();
+    state.names.forEach(function(name) {
+      const prefix = String(name || "").trim() + ":";
+      if (prefix.length > 1 && clean.toLowerCase().startsWith(prefix.toLowerCase())) {
+        clean = clean.slice(prefix.length).trimStart();
+      }
+    });
+    clean = clean.replace(/^\s*Persona\s*[12]\s*:\s*/i, "");
+    clean = clean.replace(/^\s*\((?:FOTO|VIDEO)\s*-\s*[^)]+\)\s*:\s*/i, "");
+    return clean;
+  }
   if (card.preserveText) return card.text;
 
   const player1 = state.names[0];
@@ -1291,8 +1578,7 @@ function renderCard() {
     passButton.title = "";
   }
   if (state.level === "fotos") {
-    const photoActorIndex = state.completed % 2;
-    $("#turnName").textContent = `Turno de ${state.names[photoActorIndex]}`;
+    $("#turnName").textContent = `Turno de ${state.names[state.photoTurnIndex]}`;
   } else if (card.mandatory && Number.isInteger(card.actorIndex)) {
     $("#turnName").textContent = `${actorFor(card)} le quita una prenda a ${targetFor(card)}`;
   } else if (card.for === "both") {
@@ -1321,6 +1607,8 @@ function renderCard() {
     $("#cardHint").textContent = "Etapa 1 · Ropa interior. Paso está deshabilitado hasta la carta 12.";
   } else if (state.level === "fotos" && state.photoStage === "skin") {
     $("#cardHint").textContent = "Etapa 2 · Paso está habilitado. Si omiten una carta, entra otra del banco de reserva sin repetir.";
+  } else if (state.level === "extremo1" && card.mandatory) {
+    $("#cardHint").textContent = "Carta de prenda obligatoria distribuida durante este nivel. Paso sigue disponible.";
   } else if (state.level === "extremo" && card.mandatory) {
     $("#cardHint").textContent = "Carta de prenda obligatoria programada antes de la carta 20. Paso sigue disponible.";
   } else {
@@ -1349,6 +1637,7 @@ function advanceCard() {
   if (!card) return;
 
   if (state.level === "fotos") {
+    state.photoTurnIndex = state.photoTurnIndex === 0 ? 1 : 0;
     state.completed++;
     state.current = null;
 
@@ -1571,6 +1860,17 @@ $("#nextBtn").addEventListener("click", advanceCard);
 $("#passBtn").addEventListener("click", passCard);
 $("#favoriteHeart").addEventListener("click", toggleFavorite);
 $("#favBtn").addEventListener("click", toggleFavorite);
+$("#acceptExtreme1").addEventListener("click", () => {
+  $("#extreme1Intro").classList.remove("show");
+  const key = state.pendingLevel || "extremo1";
+  state.pendingLevel = null;
+  launchLevel(key);
+});
+$("#cancelExtreme1").addEventListener("click", () => {
+  $("#extreme1Intro").classList.remove("show");
+  state.pendingLevel = null;
+  navigate("menu");
+});
 $("#acceptExtreme").addEventListener("click", () => {
   $("#extremeIntro").classList.remove("show");
   const key = state.pendingLevel || "extremo";
