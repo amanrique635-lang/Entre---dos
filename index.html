@@ -7,8 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Entre Dos</title>
-  <link rel="stylesheet" href="styles.css?v=20261015-turnos2">
-  <script src="app.js?v=20261015-turnos2" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261015-niveles4">
+  <script src="app.js?v=20261015-niveles4" defer></script>
 </head>
 <body>
 <div class="app">
@@ -59,7 +59,7 @@
       <header class="menu-head">
         <div class="eyebrow">Elijan el ambiente</div>
         <h2 class="menu-title">¿Qué quieren sentir?</h2>
-        <p class="muted" style="margin:0">Extremo, Posiciones Íntimas y Fotos usan bancos amplios de cartas. Fotos ahora avanza por dos etapas y usa cartas de reserva sin repetir.</p>
+        <p class="muted" style="margin:0">Empiecen suave y suban de intensidad a su ritmo. Cada nivel tiene un ambiente distinto y las partidas con banco amplio cambian cada vez.</p>
       </header>
       <div id="levelGrid" class="level-grid"></div>
       <div class="menu-fav"><button id="menuFavorites" class="btn secondary">♡ Nuestros favoritos</button></div>
@@ -120,9 +120,26 @@
     </div>
   </section>
 
+
+  <div id="extreme1Intro" class="modal" role="dialog" aria-modal="true" aria-labelledby="extreme1Title">
+    <div class="timer-sheet">
+      <div class="eyebrow">EXTREMO NIVEL 1</div>
+      <h3 id="extreme1Title" style="margin:8px 0 10px;font-size:1.55rem">Antes de comenzar</h3>
+      <p class="muted" style="line-height:1.55;margin:0 0 14px"><strong>Para comenzar este nivel, ambos deben estar en ropa interior.</strong></p>
+      <div class="rule" style="margin:12px 0 16px">
+        <strong>Continúen solo si los dos quieren.</strong><br><br>
+        El objetivo es completar 16 retos. Las 4 cartas de prenda aparecerán repartidas durante la partida. Cualquiera puede decir Paso en cualquier momento.
+      </div>
+      <div style="display:grid;gap:10px">
+        <button id="acceptExtreme1" class="btn primary">Estamos en ropa interior · Continuar</button>
+        <button id="cancelExtreme1" class="btn secondary">Volver al menú</button>
+      </div>
+    </div>
+  </div>
+
   <div id="extremeIntro" class="modal" role="dialog" aria-modal="true" aria-labelledby="extremeTitle">
     <div class="timer-sheet">
-      <div class="eyebrow">EXTREMO</div>
+      <div class="eyebrow">EXTREMO NIVEL 2</div>
       <h3 id="extremeTitle" style="margin:8px 0 10px;font-size:1.55rem">Antes de comenzar</h3>
       <p class="muted" style="line-height:1.55;margin:0 0 14px"><strong>Para comenzar este nivel, ambos deben estar en ropa interior.</strong></p>
       <div class="rule" style="margin:12px 0 16px">
